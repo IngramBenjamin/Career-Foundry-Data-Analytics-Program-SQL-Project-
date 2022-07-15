@@ -1,0 +1,40 @@
+# The following queries utlized inner joins in order to identify the top countries and cities for Rockbuster in terms of customer numbers,
+  as well as top customers by amounts paid.
+
+# Query to find the top 10 countries by customer count
+
+SELECT co.country, COUNT(cu.customer_id) AS count_of_customers
+FROM customer cu 
+INNER JOIN address a on a.address_id = cu.address_id 
+INNER JOIN city ci on a.city_id = ci.city_id
+INNER JOIN country co on ci.country_id = co.country_id
+GROUP BY co.country 
+ORDER BY count_of_customers DESC
+LIMIT 10
+
+# Query to find the top 10 cities within the top 10 countries identified above 
+
+SELECT ci.city, co.country, COUNT(cu.customer_id) AS count_of_customers
+FROM customer cu 
+INNER JOIN address a on a.address_id = cu.address_id 
+INNER JOIN city ci on a.city_id = ci.city_id
+INNER JOIN country co on ci.country_id = co.country_id
+WHERE co.country IN ('India','China','United States','Japan','Mexico','Brazil','Russian 
+Federation','Philippines','Turkey','Indonesia')
+GROUP BY ci.city, co.country 
+ORDER BY count_of_customers DESC
+LIMIT 10
+
+# Query to find the top 5 customers in the top 10 cities who have paid the highest total amounts to Rockbuster
+
+SELECT cu.customer_id, cu.first_name, cu.last_name, ci.city, co.country, SUM(p.amount) AS total_amount_paid
+FROM customer cu 
+INNER JOIN address a on a.address_id = cu.address_id 
+INNER JOIN city ci on a.city_id = ci.city_id
+INNER JOIN country co on ci.country_id = co.country_id
+INNER JOIN payment p on cu.customer_id = p.customer_id 
+WHERE ci.city IN ('Aurora','Atlixco','Xintai','Adoni','Dhule 
+(Dhulia)','Kurashiki','Pingxiang','Sivas','Celaya','So Leopoldo')
+GROUP BY cu.customer_id, ci.city, co.country
+ORDER BY total_amount_paid DESC
+LIMIT 5
