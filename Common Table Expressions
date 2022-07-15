@@ -1,0 +1,19 @@
+# Using a common table expression to caluclate the average total amount paid across the top 5 paying customers in the cities with the highest Rockbuster customer counts
+
+WITH top_customers_total_paid (customer_id,first_name,last_name,city,country,total_amount_paid) 
+AS
+(SELECT cu.customer_id, cu.first_name, cu.last_name, ci.city, co.country, SUM(p.amount) AS 
+total_amount_paid
+FROM customer cu 
+INNER JOIN address a on a.address_id = cu.address_id 
+INNER JOIN city ci on a.city_id = ci.city_id
+INNER JOIN country co on ci.country_id = co.country_id
+INNER JOIN payment p on cu.customer_id = p.customer_id 
+WHERE ci.city IN ('Aurora','Atlixco','Xintai','Adoni','Dhule 
+(Dhulia)','Kurashiki','Pingxiang','Sivas','Celaya','So Leopoldo')
+GROUP BY cu.customer_id, ci.city, co.country
+ORDER BY total_amount_paid DESC
+LIMIT 5)
+SELECT AVG(total_amount_paid) AS average_amount_paid FROM top_customers_total_paid
+
+# Using a common table expression to 
