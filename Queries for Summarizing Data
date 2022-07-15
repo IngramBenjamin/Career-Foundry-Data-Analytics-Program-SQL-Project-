@@ -1,0 +1,26 @@
+# The following queries calculated descriptive statistics for the film and customer tables in the Rockbuster database.
+
+# For numerical columns, I found the minimum, maximum, and average values 
+
+SELECT MIN(release_year) AS minimum_release_year, MAX(release_year) AS 
+maximum_release_year,AVG(release_year) AS average_release_year, MIN(rental_duration) AS 
+minimum_rental_duration, MAX(rental_duration) AS maximum_rental_duration, 
+AVG(rental_duration) AS average_rental_duration, MIN(rental_rate) AS minimum_rental_rate, 
+MAX(rental_rate) AS maximum_rental_rate, AVG(rental_rate) AS average_rental_rate,MIN(length) AS 
+minimum_length, MAX(length) AS maximum_length, AVG(length) AS average_length, 
+MIN(replacement_cost) AS minimum_replacement_cost, MAX(replacement_cost) AS 
+maximum_replacement_cost, AVG(replacement_cost) AS average_replacement_cost 
+FROM film
+
+# For non-numerical columns, such as film rating and special features, I calculated the mode value
+
+SELECT mode() WITHIN GROUP (ORDER BY rating) AS modal_value_rating, mode() WITHIN GROUP 
+(ORDER BY special_features) AS modal_value_special_features
+FROM film
+
+# I also found the counts of key columns, such as customers and countries, using joins
+SELECT COUNT(c.customer_id) AS count_of_customers, COUNT(DISTINCT(co.country)) AS count_of_countries FROM customer c
+INNER JOIN address a on a.address_id = c.address_id
+INNER JOIN city ci ON ci.city_id = a.city_id
+INNER JOIN country co ON co.country_id = ci.country_id
+WHERE c.active = 1
