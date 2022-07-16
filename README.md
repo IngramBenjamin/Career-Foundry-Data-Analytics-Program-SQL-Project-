@@ -1,5 +1,5 @@
 # Career-Foundry-Data-Analytics-Program-SQL-Project-
-This SQL project was part of the Career Foundry Data Analytics Program and utilized a database from a fictional movie rental company in order to use SQL to answer business questions about profitability and consumer demographics and behavior. Results were presented as visualizations created using Tableau. 
+This SQL project was part of the Career Foundry Data Analytics Program and utilized a database from a fictional movie rental company named RockBuster Stealth in order to use SQL to answer business questions about profitability and consumer demographics and behavior. Results were presented as visualizations created using Tableau. 
 
 As part of the project I set out to answer the following business questions for "Rockbuster Stealth" to use for their upcoming annual company strategy. 
 
